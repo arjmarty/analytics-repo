@@ -24,10 +24,11 @@ data = extracted_data.rename(columns={"NAME": "name", "host id": "host_id",
                                       "calculated host listings count": "listings_count",
                                       "availability 365": "annual_availability"})
 
-pd.set_option('display.max_columns', None)
+
+st.set_page_config(layout="wide")
 
 # # headers and texts
-# st.title("Data Report")
+st.title("Airbnb Data Report")
 
 # col1, col2 = st.columns([50,50])
 
@@ -44,10 +45,10 @@ with st.container(height=400):
     policy = data.groupby("cancellation_policy").agg({"cancellation_policy":"size"}).to_dict()
     policy = pd.DataFrame(policy).reset_index()
     policy = policy.rename(columns={"index": "cancellation_policy", "cancellation_policy":"no_of_hosts"})
-
-    policy = go.Figure(data=[go.Pie(values=policy["no_of_hosts"], hole=0.3, textinfo='label+percent')])
+    policy = go.Figure(data=[go.Pie(values=policy["no_of_hosts"], labels=policy["cancellation_policy"], hole=0.3, textinfo='label+percent')])
     st.plotly_chart(policy)
 
+pd.set_option('display.max_columns', None)
 # print(data.head(100))
 # print(data.columns) 
 
