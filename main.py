@@ -33,28 +33,29 @@ st.header("Airbnb Data Report", divider="blue")
 #list of metrics or number displays of important information
 with st.container(height=170, border=False):
     a, b, c, d = st.columns(4, border=True)
-    a.metric("Number of hosts", value=data["host_id"].count(), border=False)
+    no_of_hosts = data["host_id"].count()
+    a.metric("Number of hosts", value=f"{no_of_hosts:,}", border=False)
 
 
     data["host_identity_verified"].dropna()
     verified = (data["host_identity_verified"] == "verified").sum()
     pct1 = ((verified / data["host_id"].count()).__round__(3))*100
-    b.metric("Verified Hosts", value=verified, delta=None, border=False)
+    b.metric("Verified Hosts", value=f"{verified:,}", delta=None, border=False)
     # Display the delta separately without the arrow
     b.write(f'''**:green[{pct1}%]** of the total number of hosts''')
 
     
     instant = (data["instant_bookable"] == True).sum()
     pct2 = ((instant / data["host_id"].count()).__round__(3))*100
-    c.metric("Instantly Bookable Hosts", value=instant, border=False)
+    c.metric("Instantly Bookable Hosts", value=f"{instant:,}", border=False)
     c.write(f'''**:green[{pct2}%]** of the total number of hosts''')
 
-    #data cleaning on costs before aggregation
-    # prices = str(data["price"].dropna())
-    # prices = prices.strip().replace("$","").replace(",","").replace("\n","")
-
-    # print(prices)
-    # d.metric("Overall NY Airbnb Hosts Price", value=data["price"].sum())
+    #Data cleaning on costs before aggregation. Prices are in object data type, so need to be int so that computations are possible   
+    prices = pd.Series(data["price"])
+    prices = prices.str.replace("$", "", regex=False).str.replace(",", "", regex=False).dropna()
+    prices = prices.astype(int)
+    prices_total = prices.sum()
+    d.metric("Overall NY Airbnb Hosts Price", value=f"${prices_total:,}")
 
 
 # for the second line of visualizations
