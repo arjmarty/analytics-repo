@@ -27,9 +27,37 @@ data = extracted_data.rename(columns={"NAME": "name", "host id": "host_id",
 
 st.set_page_config(layout="wide")
 
-# # headers and texts
+# # main header/ title
 st.header("Airbnb Data Report", divider="blue")
 
+#list of metrics or number displays of important information
+with st.container(height=170, border=False):
+    a, b, c, d = st.columns(4, border=True)
+    a.metric("Number of hosts", value=data["host_id"].count(), border=False)
+
+
+    data["host_identity_verified"].dropna()
+    verified = (data["host_identity_verified"] == "verified").sum()
+    pct1 = ((verified / data["host_id"].count()).__round__(3))*100
+    b.metric("Verified Hosts", value=verified, delta=None, border=False)
+    # Display the delta separately without the arrow
+    b.write(f'''**:green[{pct1}%]** of the total number of hosts''')
+
+    
+    instant = (data["instant_bookable"] == True).sum()
+    pct2 = ((instant / data["host_id"].count()).__round__(3))*100
+    c.metric("Instantly Bookable Hosts", value=instant, border=False)
+    c.write(f'''**:green[{pct2}%]** of the total number of hosts''')
+
+    #data cleaning on costs before aggregation
+    # prices = str(data["price"].dropna())
+    # prices = prices.strip().replace("$","").replace(",","").replace("\n","")
+
+    # print(prices)
+    # d.metric("Overall NY Airbnb Hosts Price", value=data["price"].sum())
+
+
+# for the second line of visualizations
 col1, col2 = st.columns([60,40], gap="medium")
 
 with col1:
@@ -52,8 +80,8 @@ with col2:
         policy.update_traces(marker=dict(colors=colors))
         st.plotly_chart(policy)
 
-pd.set_option('display.max_columns', None)
-# print(data.head(100))
+# pd.set_option('display.max_columns', None)
+# print(data)
 # print(data.columns) 
 
 
