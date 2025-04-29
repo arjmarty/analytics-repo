@@ -32,7 +32,7 @@ st.header("Airbnb Data Report", divider="blue")
 
 #list of metrics or number displays of important information
 with st.container(height=170, border=False):
-    a, b, c, d = st.columns(4, border=True)
+    a, b, c, d, e = st.columns(5, border=True)
     no_of_hosts = data["host_id"].count()
     a.metric("Number of hosts", value=f"{no_of_hosts:,}", border=False)
 
@@ -50,12 +50,24 @@ with st.container(height=170, border=False):
     c.metric("Instantly Bookable Hosts", value=f"{instant:,}", border=False)
     c.write(f'''**:green[{pct2}%]** of the total number of hosts''')
 
-    #Data cleaning on costs before aggregation. Prices are in object data type, so need to be int so that computations are possible   
+
+    #Data cleaning on hosts' price before aggregation. Prices are in object data type, so need to be int so that computations are possible   
     prices = pd.Series(data["price"])
     prices = prices.str.replace("$", "", regex=False).str.replace(",", "", regex=False).dropna()
     prices = prices.astype(int)
     prices_total = prices.sum()
+    prices_mean = prices.mean().__round__(2)
     d.metric("Overall NY Airbnb Hosts Price", value=f"${prices_total:,}")
+    d.write(f'''Average Airbnb Host Price: **:blue[${prices_mean:,}]**''')
+
+    #Data cleaning on airbnb service fee before aggregation. Prices are in object data type, so need to be int so that computations are possible   
+    svc_fee = pd.Series(data["service_fee"])
+    svc_fee = svc_fee.str.replace("$", "", regex=False).str.replace(",", "", regex=False).dropna()
+    svc_fee = svc_fee.astype(int)
+    svc_fee_total = svc_fee.sum()
+    svc_fee_mean = svc_fee.mean().__round__(2)
+    e.metric("Total Airbnb Service Fee Collected", value=f"${svc_fee_total:,}")
+    e.write(f'''Average Airbnb Service Fee: **:blue[${svc_fee_mean:,}]**''')
 
 
 # for the second line of visualizations
@@ -81,9 +93,9 @@ with col2:
         policy.update_traces(marker=dict(colors=colors))
         st.plotly_chart(policy)
 
-# pd.set_option('display.max_columns', None)
-# print(data)
-# print(data.columns) 
+pd.set_option('display.max_columns', None)
+print(data)
+print(data.columns) 
 
 
 # st.line_chart(x=)
