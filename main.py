@@ -71,7 +71,7 @@ with st.container(height=170, border=False):
 
 
 # for the second line of visualizations
-col1, col2 = st.columns([60,40], gap="medium")
+col1, col2 = st.columns([50,50], gap="medium")
 
 with col1:
     with st.container(height=None):
@@ -83,6 +83,27 @@ with col1:
 
 with col2:
     with st.container(height=None):
+        # for the bar chart visualization of neighborhood groups breakdown
+        # data cleaning on string fields
+        data["neighborhood_group"] = data["neighborhood_group"].dropna().str.replace("brookln","Brooklyn").str.replace("manhatan", "Manhattan")
+        #group by according to no. of airbnb hosts per neighborhood group
+        loc_group = data.groupby("neighborhood_group").agg({"neighborhood_group":"size"}).to_dict()
+        loc_group = pd.DataFrame(loc_group).reset_index()
+        loc_group = loc_group.rename(columns={"index":"neighborhood_group", "neighborhood_group": "no_of_hosts"})
+        st.markdown("**Airbnb Hosts Neighborhood Group**")
+        # since st.bar_chart has limited feature (especially on data inside bar labels, I will use)
+        loc_group_bar = px.bar(loc_group, x="neighborhood_group", y="no_of_hosts", text_auto=True)
+        loc_group_bar.update_traces(marker=dict(color="steelblue"))
+        st.plotly_chart(loc_group_bar)
+        # st.bar_chart(data=loc_group, x="neighborhood_group", y="no_of_hosts", x_label="Neighborhood Group", y_label="Number of Hosts") 
+        # -- this can also be used in case you want from streamlit direct
+
+
+
+col1, col2 = st.columns([50, 50], gap="medium")
+
+with col1:
+    with st.container(height=None):
         st.markdown("**Host Cancellation Policy Breakdown**")
         # for the donut chart visualization
         colors = ["olive", "darksalmon", "mediumslateblue"]
@@ -92,12 +113,13 @@ with col2:
         policy = go.Figure(data=[go.Pie(values=policy["no_of_hosts"], labels=policy["cancellation_policy"], hole=0.4, textinfo='label+percent')])
         policy.update_traces(marker=dict(colors=colors))
         st.plotly_chart(policy)
-
-pd.set_option('display.max_columns', None)
-print(data)
-print(data.columns) 
+        
 
 
-# st.line_chart(x=)
+# pd.set_option('display.max_columns', None)
+# print(data)
+# print(data.columns) 
+
+
 
 
