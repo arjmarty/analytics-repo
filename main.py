@@ -72,7 +72,7 @@ with st.container(height=170, border=False):
 
 
 # for the second line of visualizations
-with st.container(height=600):
+with st.container(height=600, border=True):
     col1, col2 = st.columns([50,50], gap="medium")
     with col1:
         st.markdown("**Map Visualization of Airbnb Hosts**")
@@ -100,7 +100,7 @@ with st.container(height=600):
         # -- this can also be used in case you want from streamlit direct
 
 
-with st.container(height=None):
+with st.container(height=None, border=True):
     col1, col2 = st.columns([35, 65], gap="large")
     with col1:
         st.markdown("**Host Cancellation Policy Breakdown**")
@@ -125,7 +125,7 @@ with st.container(height=None):
         st.plotly_chart(cons_year_line)
 
 
-with st.container(height=None):
+with st.container(height=None, border=True):
     col1, col2 = st.columns(2, gap="large")
     with col1:
         st.markdown("**Top NY Airbnb Hosts (by Reviews)**")
@@ -138,6 +138,7 @@ with st.container(height=None):
 
 
     with col2:
+        st.markdown("**Airbnb Room Types Breakdown**")
         room_type = data.groupby("room_type").agg({"room_type":"size"}).to_dict()
         room_type = pd.DataFrame(room_type).reset_index()
         room_type = room_type.rename(columns={"index":"room_type", "room_type":"no_of_hosts"})
