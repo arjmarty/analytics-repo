@@ -3,7 +3,6 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
-import time
 
 
 extracted_data = pd.read_csv("~/analytics-repo/analytics-repo/data-files/Airbnb_Open_Data.csv", low_memory=False)
@@ -28,11 +27,16 @@ data = extracted_data.rename(columns={"NAME": "name", "host id": "host_id",
 
 st.set_page_config(layout="wide")
 
-# # main header/ title
+# main header/ title
 st.header("Airbnb Data Report", divider="blue")
+
+# Wrap your content inside a div with this class
+with open("styles.css") as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 #list of metrics or number displays of important information
 with st.container(height=170, border=False):
+    
     a, b, c, d, e = st.columns(5, border=True)
     no_of_hosts = data["host_id"].count()
     a.metric("Number of hosts", value=f"{no_of_hosts:,}", border=False)
@@ -129,7 +133,7 @@ with st.container(height=None, border=True):
     col1, col2 = st.columns(2, gap="large")
     with col1:
         st.markdown("**Top NY Airbnb Hosts (by Reviews)**")
-        top_host = data[["host_name","number_of_reviews"]].sort_values(by="number_of_reviews", ascending=False).round(0)
+        top_host = data[["host_name","number_of_reviews"]].round({"number_of_reviews":0}).sort_values(by="number_of_reviews", ascending=False)
         top_host["number_of_reviews"] = top_host["number_of_reviews"].dropna()
         top_host["host_name"] = top_host["host_name"].replace("M", "Unknown Host")
         top_host = top_host.head(10).reset_index(drop=True)
@@ -148,8 +152,8 @@ with st.container(height=None, border=True):
 
 # print(top_host)
 
-# pd.set_option('display.max_columns', None)
-# print(data)
+pd.set_option('display.max_columns', None)
+print(data)
 # print(data.columns) 
 
 
