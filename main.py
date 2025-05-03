@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
-
+import os
 
 extracted_data = pd.read_csv("~/analytics-repo/analytics-repo/data-files/Airbnb_Open_Data.csv", low_memory=False)
 
@@ -31,12 +31,13 @@ st.set_page_config(layout="wide")
 st.header("Airbnb Data Report", divider="blue")
 
 # Wrap your content inside a div with this class
-with open("styles.css") as f:
+css_path = os.path.expanduser("~/analytics-repo/analytics-repo/styles.css")
+print(css_path)
+with open(css_path) as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 #list of metrics or number displays of important information
 with st.container(height=170, border=False):
-    
     a, b, c, d, e = st.columns(5, border=True)
     no_of_hosts = data["host_id"].count()
     a.metric("Number of hosts", value=f"{no_of_hosts:,}", border=False)
@@ -149,11 +150,8 @@ with st.container(height=None, border=True):
         room_type_donut = go.Figure(data=[go.Pie(values=room_type["no_of_hosts"], labels=room_type["room_type"], hole=0.4, textinfo='label+percent')])
         st.plotly_chart(room_type_donut)
 
-
-# print(top_host)
-
-pd.set_option('display.max_columns', None)
-print(data)
+# pd.set_option('display.max_columns', None)
+# print(data)
 # print(data.columns) 
 
 
