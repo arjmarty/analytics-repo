@@ -20,7 +20,7 @@ data = extracted_data.rename(columns={"NAME": "name", "host id": "host_id",
                                       "number of reviews" : "number_of_reviews",
                                       "last review": "last_review", 
                                       "reviews per month": "reviews_per_month",
-                                      " review rate number": "review_rating", 
+                                      "review rate number": "review_rating", 
                                       "calculated host listings count": "listings_count",
                                       "availability 365": "annual_availability"})
 
@@ -131,18 +131,24 @@ with st.container(height=None, border=True):
 
 
 with st.container(height=None, border=True):
-    col1, col2 = st.columns(2, gap="large")
+    col1, col2, col3 = st.columns(2, gap="large")
     with col1:
         st.markdown("**Top NY Airbnb Hosts (by Reviews)**")
+        #cleaned the no. of reviews by replacing "NA" with 0
+        data["number_of_reviews"] = data["number_of_reviews"].fillna(0).astype(int)
         top_host = data[["host_name","number_of_reviews"]].round({"number_of_reviews":0}).sort_values(by="number_of_reviews", ascending=False)
-        top_host["number_of_reviews"] = top_host["number_of_reviews"].dropna()
+        top_host["number_of_reviews"] = top_host["number_of_reviews"]
         top_host["host_name"] = top_host["host_name"].replace("M", "Unknown Host")
         top_host = top_host.head(10).reset_index(drop=True)
         top_host.index = top_host.index + 1
         st.table(top_host)
 
-
     with col2:
+        rating = data.groupby("review_rating").agg({"review_rating":"size"}).to_dict()
+        rating = pd.DataFrame(rating).reset_index()
+        rating = rating.rename(columns={"index": "review_rating", "review_rating":"no_of_hosts"})
+
+    with col3:
         st.markdown("**Airbnb Room Types Breakdown**")
         room_type = data.groupby("room_type").agg({"room_type":"size"}).to_dict()
         room_type = pd.DataFrame(room_type).reset_index()
@@ -150,9 +156,11 @@ with st.container(height=None, border=True):
         room_type_donut = go.Figure(data=[go.Pie(values=room_type["no_of_hosts"], labels=room_type["room_type"], hole=0.4, textinfo='label+percent')])
         st.plotly_chart(room_type_donut)
 
-# pd.set_option('display.max_columns', None)
-# print(data)
-# print(data.columns) 
+
+
+pd.set_option('display.max_columns', None)
+print(data)
+print(data.columns) 
 
 
 
