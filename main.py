@@ -131,7 +131,7 @@ with st.container(height=None, border=True):
 
 
 with st.container(height=None, border=True):
-    col1, col2, col3 = st.columns(2, gap="large")
+    col1, col2, col3 = st.columns([28,36,36], gap="large")
     with col1:
         st.markdown("**Top NY Airbnb Hosts (by Reviews)**")
         #cleaned the no. of reviews by replacing "NA" with 0
@@ -139,6 +139,7 @@ with st.container(height=None, border=True):
         top_host = data[["host_name","number_of_reviews"]].round({"number_of_reviews":0}).sort_values(by="number_of_reviews", ascending=False)
         top_host["number_of_reviews"] = top_host["number_of_reviews"]
         top_host["host_name"] = top_host["host_name"].replace("M", "Unknown Host")
+        top_host = top_host.rename(columns={"host_name": "Host Name", "number_of_reviews": "No. of Reviews"})
         top_host = top_host.head(10).reset_index(drop=True)
         top_host.index = top_host.index + 1
         st.table(top_host)
@@ -147,6 +148,11 @@ with st.container(height=None, border=True):
         rating = data.groupby("review_rating").agg({"review_rating":"size"}).to_dict()
         rating = pd.DataFrame(rating).reset_index()
         rating = rating.rename(columns={"index": "review_rating", "review_rating":"no_of_hosts"})
+        st.markdown("**Airbnb Hosts Breakdown by Review Ratings**")
+        review_ratings = px.bar(rating, x="no_of_hosts", y="review_rating", text_auto=True, orientation='h', labels={"no_of_hosts": "No. of Hosts", "review_rating": "Review Rating"})
+        review_ratings.update_traces(marker=dict(color="teal"))
+        st.plotly_chart(review_ratings)
+        
 
     with col3:
         st.markdown("**Airbnb Room Types Breakdown**")
