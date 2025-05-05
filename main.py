@@ -78,9 +78,9 @@ with st.container(height=170, border=False):
 
 # for the second line of visualizations
 with st.container(height=600, border=True):
-    col1, col2, col3 = st.columns([30,40,30], gap="medium")
+    col1, col2, col3 = st.columns([30,35,35], gap="medium")
     with col1:
-        st.markdown("**Map Visualization of Airbnb Hosts**")
+        st.markdown("**Map Visualization of Airbnb Listing Locations**")
         # for the map visualization
         location = data[["neighborhood_group","lat", "long"]]
         location = location.dropna()
