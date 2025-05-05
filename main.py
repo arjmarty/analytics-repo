@@ -78,7 +78,7 @@ with st.container(height=170, border=False):
 
 # for the second line of visualizations
 with st.container(height=600, border=True):
-    col1, col2 = st.columns([50,50], gap="medium")
+    col1, col2, col3 = st.columns([30,40,30], gap="medium")
     with col1:
         st.markdown("**Map Visualization of Airbnb Hosts**")
         # for the map visualization
@@ -104,9 +104,16 @@ with st.container(height=600, border=True):
         # st.bar_chart(data=loc_group, x="neighborhood_group", y="no_of_hosts", x_label="Neighborhood Group", y_label="Number of Hosts") 
         # -- this can also be used in case you want from streamlit direct
 
+    with col3:
+        st.markdown("**Airbnb Room Types Breakdown**")
+        room_type = data.groupby("room_type").agg({"room_type":"size"}).to_dict()
+        room_type = pd.DataFrame(room_type).reset_index()
+        room_type = room_type.rename(columns={"index":"room_type", "room_type":"no_of_hosts"})
+        room_type_donut = go.Figure(data=[go.Pie(values=room_type["no_of_hosts"], labels=room_type["room_type"], hole=0.4, textinfo='label+percent')])
+        st.plotly_chart(room_type_donut)
 
 with st.container(height=None, border=True):
-    col1, col2 = st.columns([35, 65], gap="large")
+    col1, col2 = st.columns([40, 60], gap="large")
     with col1:
         st.markdown("**Host Cancellation Policy Breakdown**")
         # for the donut chart visualization
@@ -128,6 +135,7 @@ with st.container(height=None, border=True):
         cons_year_line.update_xaxes(title="Construction Year", showline=True, linecolor='gray')
         cons_year_line.update_yaxes(range=[0, 5500], title="No. of Hosts", showline=True, linecolor='gray')
         st.plotly_chart(cons_year_line)
+
 
 
 with st.container(height=None, border=True):
@@ -153,20 +161,20 @@ with st.container(height=None, border=True):
         review_ratings.update_traces(marker=dict(color="teal"))
         st.plotly_chart(review_ratings)
         
-
     with col3:
-        st.markdown("**Airbnb Room Types Breakdown**")
-        room_type = data.groupby("room_type").agg({"room_type":"size"}).to_dict()
-        room_type = pd.DataFrame(room_type).reset_index()
-        room_type = room_type.rename(columns={"index":"room_type", "room_type":"no_of_hosts"})
-        room_type_donut = go.Figure(data=[go.Pie(values=room_type["no_of_hosts"], labels=room_type["room_type"], hole=0.4, textinfo='label+percent')])
-        st.plotly_chart(room_type_donut)
+        st.markdown("**Top NY Airbnb Hosts with Five-Star Ratings**")
+        data["review_rating"] = data["review_rating"].fillna(0).astype(int).round(0)
+        top_host2 = data[["host_name","number_of_reviews", "review_rating"]].sort_values(by=["review_rating", "number_of_reviews"], ascending=False)
+        top_host2 = top_host2.drop_duplicates().head(10).reset_index(drop=True)
+        top_host2 = top_host2.rename(columns={"host_name":"Host Name", "number_of_reviews": "No. of Reviews", "review_rating": "Rating"})
+        top_host2.index = top_host2.index + 1
+        st.table(top_host2)
 
 
-
-pd.set_option('display.max_columns', None)
-print(data)
-print(data.columns) 
+#Overall overview of the data for analyses: uncomment from time to time to uncover more insights
+# pd.set_option('display.max_columns', None)
+# print(data)
+# print(data.columns) 
 
 
 
