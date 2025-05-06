@@ -1,14 +1,29 @@
 .stApp {
     margin: auto;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: -apple-system,     BlinkMacSystemFont, sans-serif;
     overflow: auto;
-    background: rgb(252, 244, 237);
+    background: #0b026a;
     animation: gradient 15s ease infinite;
     background-size: 400% 400%;
     background-attachment: fixed;
 }
 
-/* .st-key-viz1-container {
-    background-color: #f0f0f0;
-    border: 20px solid white;
-} */
+.st-key-metric-container {
+    background-color: #e8f7fd;
+    border: 0px solid rgb(255, 255, 255);
+}
+
+.st-key-viz1-container {
+    background-color: #0b026a;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.st-key-viz2-container {
+    background-color: #800606;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.st-key-viz3-container {
+    background-color: #ffffff;
+    border: 1px solid rgb(255, 255, 255);
+}
