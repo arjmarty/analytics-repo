@@ -77,8 +77,8 @@ with st.container(height=170, border=False):
 
 
 # for the second line of visualizations
-with st.container(height=600, border=True):
-    col1, col2, col3 = st.columns([30,35,35], gap="medium")
+with st.container(height=600, border=True, key="viz1-container"):
+    col1, col2, col3 = st.columns([30,35,35], gap="medium", border=True)
     with col1:
         st.markdown("**Map Visualization of Airbnb Listing Locations**")
         # for the map visualization
@@ -113,7 +113,7 @@ with st.container(height=600, border=True):
         st.plotly_chart(room_type_donut)
 
 with st.container(height=None, border=True):
-    col1, col2 = st.columns([40, 60], gap="large")
+    col1, col2 = st.columns([40, 60], gap="large", border=True)
     with col1:
         st.markdown("**Host Cancellation Policy Breakdown**")
         # for the donut chart visualization
@@ -139,7 +139,7 @@ with st.container(height=None, border=True):
 
 
 with st.container(height=None, border=True):
-    col1, col2, col3 = st.columns([28,36,36], gap="large")
+    col1, col2, col3 = st.columns([28,36,36], gap="large", border=True)
     with col1:
         st.markdown("**Top NY Airbnb Hosts (by Reviews)**")
         #cleaned the no. of reviews by replacing "NA" with 0
