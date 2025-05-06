@@ -2,28 +2,18 @@
     margin: auto;
     font-family: -apple-system,     BlinkMacSystemFont, sans-serif;
     overflow: auto;
-    background: #0b026a;
+    background: #030d5d56;
     animation: gradient 15s ease infinite;
     background-size: 400% 400%;
     background-attachment: fixed;
 }
 
 .st-key-metric-container {
-    background-color: #e8f7fd;
+    background-color: #fdb3452a;
     border: 0px solid rgb(255, 255, 255);
 }
 
 .st-key-viz1-container {
-    background-color: #0b026a;
-    border: 1px solid rgb(255, 255, 255);
-}
-
-.st-key-viz2-container {
-    background-color: #800606;
-    border: 1px solid rgb(255, 255, 255);
-}
-
-.st-key-viz3-container {
-    background-color: #ffffff;
+    background-color: #263364d2;
     border: 1px solid rgb(255, 255, 255);
 }

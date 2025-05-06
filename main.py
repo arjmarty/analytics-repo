@@ -77,16 +77,16 @@ with st.container(height=None, border=False, key="metric-container"):
 
 
 # for the second line of visualizations
-with st.container(height=600, border=False, key="viz1-container"):
-    col1, col2, col3 = st.columns([30,35,35], gap="small", border=True)
-    with col1:
+with st.container(height=None, border=False, key="viz1-container"):
+    col1, col2, col3 = st.columns([36,36,28], gap="small", border=False, vertical_alignment="center")
+    with col3:
         # st.markdown("**Map Visualization of Airbnb Listing Locations**")
         # for the map visualization
         location = data[["neighborhood_group","lat", "long"]]
         location = location.dropna()
         st.map(location, latitude="lat", longitude="long", size=16)
 
-    with col2:
+    with col1:
         # for the bar chart visualization of neighborhood groups breakdown
         # data cleaning on string fields
         data["neighborhood_group"] = data["neighborhood_group"].dropna().str.replace("brookln","Brooklyn").str.replace("manhatan", "Manhattan")
@@ -100,18 +100,18 @@ with st.container(height=600, border=False, key="viz1-container"):
         loc_group_bar.update_traces(marker=dict(color="steelblue"))
         loc_group_bar.update_xaxes(title="Neighborhood Group", showline=True, linecolor='gray')
         loc_group_bar.update_yaxes(title="No. of Hosts", showline=True, linecolor='gray')
-        loc_group_bar.update_layout(title='Airbnb Hosts Neighborhood Group', title_font=dict(size=16, color='antiquewhite'), paper_bgcolor='darkseagreen', plot_bgcolor='cadetblue')
+        loc_group_bar.update_layout(title='Airbnb Hosts Neighborhood Group', title_font=dict(size=16, color='darkcyan'), paper_bgcolor='ivory', plot_bgcolor='bisque')
         st.plotly_chart(loc_group_bar)
         # st.bar_chart(data=loc_group, x="neighborhood_group", y="no_of_hosts", x_label="Neighborhood Group", y_label="Number of Hosts") 
         # -- this can also be used in case you want from streamlit direct
 
-    with col3:
+    with col2:
         # st.markdown("**Airbnb Room Types Breakdown**")    
         room_type = data.groupby("room_type").agg({"room_type":"size"}).to_dict()
         room_type = pd.DataFrame(room_type).reset_index()
         room_type = room_type.rename(columns={"index":"room_type", "room_type":"no_of_hosts"})
         room_type_donut = go.Figure(data=[go.Pie(values=room_type["no_of_hosts"], labels=room_type["room_type"], hole=0.4, textinfo='label+percent')])
-        room_type_donut.update_layout(title='Airbnb Hosts Neighborhood Group', title_font=dict(size=16, color='antiquewhite'), paper_bgcolor='darkseagreen', plot_bgcolor='beige')
+        room_type_donut.update_layout(title='Room Types Breakdown', title_font=dict(size=16, color='darkcyan'), paper_bgcolor='ivory', plot_bgcolor='bisque')
         st.plotly_chart(room_type_donut)
 
 # with st.container(height=None, border=False, key="viz2-container"):
