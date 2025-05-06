@@ -28,7 +28,7 @@ data = extracted_data.rename(columns={"NAME": "name", "host id": "host_id",
 st.set_page_config(layout="wide")
 
 # main header/ title
-st.header(":green[Airbnb Data Report]", divider="blue")
+st.header(":orange[Airbnb Data Report]")
 
 # Wrap your content inside a div with this class
 css_path = os.path.expanduser("~/analytics-repo/analytics-repo/styles.css")
@@ -100,7 +100,7 @@ with st.container(height=600, border=False, key="viz1-container"):
         loc_group_bar.update_traces(marker=dict(color="steelblue"))
         loc_group_bar.update_xaxes(title="Neighborhood Group", showline=True, linecolor='gray')
         loc_group_bar.update_yaxes(title="No. of Hosts", showline=True, linecolor='gray')
-        loc_group_bar.update_layout(title='Airbnb Hosts Neighborhood Group', title_font=dict(size=16, color='antiquewhite'), paper_bgcolor='midnightblue', plot_bgcolor='beige')
+        loc_group_bar.update_layout(title='Airbnb Hosts Neighborhood Group', title_font=dict(size=16, color='antiquewhite'), paper_bgcolor='darkseagreen', plot_bgcolor='cadetblue')
         st.plotly_chart(loc_group_bar)
         # st.bar_chart(data=loc_group, x="neighborhood_group", y="no_of_hosts", x_label="Neighborhood Group", y_label="Number of Hosts") 
         # -- this can also be used in case you want from streamlit direct
@@ -111,7 +111,7 @@ with st.container(height=600, border=False, key="viz1-container"):
         room_type = pd.DataFrame(room_type).reset_index()
         room_type = room_type.rename(columns={"index":"room_type", "room_type":"no_of_hosts"})
         room_type_donut = go.Figure(data=[go.Pie(values=room_type["no_of_hosts"], labels=room_type["room_type"], hole=0.4, textinfo='label+percent')])
-        room_type_donut.update_layout(title='Airbnb Hosts Neighborhood Group', title_font=dict(size=16, color='antiquewhite'), paper_bgcolor='midnightblue', plot_bgcolor='beige')
+        room_type_donut.update_layout(title='Airbnb Hosts Neighborhood Group', title_font=dict(size=16, color='antiquewhite'), paper_bgcolor='darkseagreen', plot_bgcolor='beige')
         st.plotly_chart(room_type_donut)
 
 # with st.container(height=None, border=False, key="viz2-container"):
