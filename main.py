@@ -135,7 +135,7 @@ with col2:
     cons_year_line.update_traces(textposition="bottom right")
     cons_year_line.update_xaxes(title="Construction Year", showline=True, linecolor='gray')
     cons_year_line.update_yaxes(range=[0, 5500], title="No. of Hosts", showline=True, linecolor='gray')
-    policy.update_layout(title="Airbnb Listing Breakdown by Construction Year", title_font=dict(size=16, color='darkcyan'), paper_bgcolor='ivory', plot_bgcolor='bisque')
+    cons_year_line.update_layout(title="Airbnb Listing Breakdown by Construction Year", title_font=dict(size=16, color='darkcyan'), paper_bgcolor='ivory', plot_bgcolor='bisque')
     st.plotly_chart(cons_year_line)
 
 
