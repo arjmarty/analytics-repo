@@ -158,9 +158,9 @@ with col2:
     rating = data.groupby("review_rating").agg({"review_rating":"size"}).to_dict()
     rating = pd.DataFrame(rating).reset_index()
     rating = rating.rename(columns={"index": "review_rating", "review_rating":"no_of_hosts"})
-    st.markdown("**Airbnb Hosts Breakdown by Review Ratings**")
     review_ratings = px.bar(rating, x="no_of_hosts", y="review_rating", text_auto=True, orientation='h', labels={"no_of_hosts": "No. of Hosts", "review_rating": "Review Rating"})
     review_ratings.update_traces(marker=dict(color="teal"))
+    review_ratings.update_layout(title="Airbnb Hosts Breakdown by Review Ratings", title_font=dict(size=16, color='darkcyan'), paper_bgcolor='ivory', plot_bgcolor='bisque')
     st.plotly_chart(review_ratings)
     
 with col3:
