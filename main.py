@@ -117,7 +117,6 @@ with st.container(height=None, border=False, key="viz1-container"):
 # with st.container(height=None, border=False, key="viz2-container"):
 col1, col2 = st.columns([40, 60], gap="large", border=True)
 with col1:
-    st.markdown("**Host Cancellation Policy Breakdown**")
     # for the donut chart visualization
     colors = ["olive", "darksalmon", "mediumslateblue"]
     policy = data.groupby("cancellation_policy").agg({"cancellation_policy":"size"}).to_dict()
@@ -125,10 +124,10 @@ with col1:
     policy = policy.rename(columns={"index": "cancellation_policy", "cancellation_policy":"no_of_hosts"})
     policy = go.Figure(data=[go.Pie(values=policy["no_of_hosts"], labels=policy["cancellation_policy"], hole=0.4, textinfo='label+percent')])
     policy.update_traces(marker=dict(colors=colors))
+    policy.update_layout(title="Host Cancellation Policy Breakdown", title_font=dict(size=16, color='darkcyan'), paper_bgcolor='ivory', plot_bgcolor='bisque')
     st.plotly_chart(policy)
 
 with col2:
-    st.markdown("**Airbnb Listing Breakdown by Construction Year**")
     cons_year = data.groupby("construction_year").agg({"construction_year":"size"}).to_dict()
     cons_year = pd.DataFrame(cons_year).reset_index()
     cons_year = cons_year.rename(columns={"index": "construction_year", "construction_year":"no_of_hosts"})
@@ -136,6 +135,7 @@ with col2:
     cons_year_line.update_traces(textposition="bottom right")
     cons_year_line.update_xaxes(title="Construction Year", showline=True, linecolor='gray')
     cons_year_line.update_yaxes(range=[0, 5500], title="No. of Hosts", showline=True, linecolor='gray')
+    policy.update_layout(title="Airbnb Listing Breakdown by Construction Year", title_font=dict(size=16, color='darkcyan'), paper_bgcolor='ivory', plot_bgcolor='bisque')
     st.plotly_chart(cons_year_line)
 
 
