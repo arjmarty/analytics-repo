@@ -161,7 +161,7 @@ with st.container(height=None, border=False, key="viz1-container"):
         room_type_donut.update_layout(
             title="Room Types Breakdown",
             title_font=dict(size=16, color="darkcyan"),
-            paper_bgcolor="ivory",
+            paper_bgcolor="ghostwhite",
             plot_bgcolor="bisque",
         )
         st.plotly_chart(room_type_donut)
@@ -194,7 +194,7 @@ with col1:
     policy.update_layout(
         title="Host Cancellation Policy Breakdown",
         title_font=dict(size=16, color="darkcyan"),
-        paper_bgcolor="ivory",
+        paper_bgcolor="ghostwhite",
         plot_bgcolor="bisque",
     )
     st.plotly_chart(policy)
@@ -220,7 +220,7 @@ with col2:
     cons_year_line.update_layout(
         title="Airbnb Listing Breakdown by Construction Year",
         title_font=dict(size=16, color="darkcyan"),
-        paper_bgcolor="ivory",
+        paper_bgcolor="ghostwhite",
         plot_bgcolor="bisque",
     )
     st.plotly_chart(cons_year_line)
@@ -264,7 +264,7 @@ with col2:
     review_ratings.update_layout(
         title="Airbnb Hosts Breakdown by Review Ratings",
         title_font=dict(size=16, color="darkcyan"),
-        paper_bgcolor="ivory",
+        paper_bgcolor="ghostwhite",
         plot_bgcolor="bisque",
     )
     st.plotly_chart(review_ratings)
