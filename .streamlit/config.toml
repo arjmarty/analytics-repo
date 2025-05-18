@@ -1,1 +1,4 @@
+[
+    global
+]
 DATA_PATH = "/home/coare-ann/analytics-repo/analytics-repo/data-files/Airbnb_Open_Data.csv"
