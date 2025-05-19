@@ -1,1 +1,4 @@
+[
+    data
+]
 DATA_PATH = "https://raw.githubusercontent.com/arjmarty/analytics-repo/refs/heads/main/data-files/Airbnb_Open_Data.csv"
