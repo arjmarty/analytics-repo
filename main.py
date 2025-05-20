@@ -5,9 +5,14 @@ import plotly.express as px
 import plotly.graph_objects as go
 import os
 
-extracted_data = pd.read_csv(
-    "~/analytics-repo/analytics-repo/data-files/Airbnb_Open_Data.csv", low_memory=False
-)
+
+# Define the base directory (the directory of the current script)
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the path to the CSV file inside the 'data/data-files' folder
+csv_file_path = os.path.join(base_dir, "data", "data-files", "Airbnb_Open_Data.csv")
+
+extracted_data = pd.read_csv(csv_file_path, low_memory=False)
 
 
 # renaming columns for consistent format
