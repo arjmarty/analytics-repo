@@ -129,7 +129,7 @@ with st.container(height=None, border=False, key="viz1-container"):
         loc_group_bar = px.bar(
             loc_group, x="neighborhood_group", y="no_of_hosts", text_auto=True
         )
-        loc_group_bar.update_traces(marker=dict(color="steelblue"))
+        loc_group_bar.update_traces(marker=dict(color="darkseagreen"))
         loc_group_bar.update_xaxes(
             title="Neighborhood Group", showline=True, linecolor="gray"
         )
