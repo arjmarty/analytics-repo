@@ -10,7 +10,7 @@ import os
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Construct the path to the CSV file inside the 'data/data-files' folder
-csv_file_path = os.path.join(base_dir, "data", "data-files", "Airbnb_Open_Data.csv")
+csv_file_path = os.path.join(base_dir, "data-files", "Airbnb_Open_Data.csv")
 
 extracted_data = pd.read_csv(csv_file_path, low_memory=False)
 
@@ -140,7 +140,7 @@ with st.container(height=None, border=False, key="viz1-container"):
             title="Airbnb Hosts Neighborhood Group",
             title_font=dict(size=16, color="darkcyan"),
             paper_bgcolor="ghostwhite",
-            plot_bgcolor="bisque",
+            plot_bgcolor="ghostwhite",
         )
         st.plotly_chart(loc_group_bar)
         # st.bar_chart(data=loc_group, x="neighborhood_group", y="no_of_hosts", x_label="Neighborhood Group", y_label="Number of Hosts")
@@ -226,7 +226,7 @@ with col2:
         title="Airbnb Listing Breakdown by Construction Year",
         title_font=dict(size=16, color="darkcyan"),
         paper_bgcolor="ghostwhite",
-        plot_bgcolor="bisque",
+        plot_bgcolor="ghostwhite",
     )
     st.plotly_chart(cons_year_line)
 
@@ -270,7 +270,7 @@ with col2:
         title="Airbnb Hosts Breakdown by Review Ratings",
         title_font=dict(size=16, color="darkcyan"),
         paper_bgcolor="ghostwhite",
-        plot_bgcolor="bisque",
+        plot_bgcolor="ghostwhite",
     )
     st.plotly_chart(review_ratings)
 
